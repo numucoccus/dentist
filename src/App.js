@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Sidebar from './components/Sidebar/Sidebar';
+import Home from './Pages/Home/Home';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/globals.css';
 
 function App() {
+  const [sidebarExpanded, setSidebarExpanded] = useState(true);
+
+  const toggleSidebar = () => {
+    setSidebarExpanded(!sidebarExpanded);
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Sidebar isExpanded={sidebarExpanded} onToggle={toggleSidebar} />
+      
+      <div className={`main-content ${sidebarExpanded ? 'expanded' : 'collapsed'}`}>
+        <Home />
+      </div>
     </div>
   );
 }
