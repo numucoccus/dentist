@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Add this import
 
 const Sidebar = ({ isExpanded, onToggle }) => {
   return (
@@ -11,26 +12,26 @@ const Sidebar = ({ isExpanded, onToggle }) => {
       </div>
       
       <nav className="sidebar-nav">
-        <a href="#home" className="sidebar-link">
+        <Link to="/" className="sidebar-link">
           <span>🏠</span>
           {isExpanded && <span>Home</span>}
-        </a>
-        <a href="#services" className="sidebar-link">
+        </Link>
+        <Link to="/services" className="sidebar-link">
           <span>🦷</span>
           {isExpanded && <span>Services</span>}
-        </a>
-        <a href="#doctors" className="sidebar-link">
+        </Link>
+        <Link to="/doctors" className="sidebar-link">
           <span>👨‍⚕️</span>
           {isExpanded && <span>Doctors</span>}
-        </a>
-        <a href="#reviews" className="sidebar-link">
+        </Link>
+        <Link to="/reviews" className="sidebar-link">
           <span>⭐</span>
           {isExpanded && <span>Reviews</span>}
-        </a>
-        <a href="#contact" className="sidebar-link">
+        </Link>
+        <Link to="/contact" className="sidebar-link">
           <span>📞</span>
           {isExpanded && <span>Contact</span>}
-        </a>
+        </Link>
       </nav>
     </div>
   );

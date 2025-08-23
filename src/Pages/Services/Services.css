@@ -2,44 +2,65 @@
   padding: 2rem 0;
   min-height: 100vh;
   background-color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .page-title {
   color: #3b82f6;
   font-weight: 700;
   margin-bottom: 2rem;
-  text-align: center;
+  font-size: 2.5rem;
 }
 
 .booking-form {
   margin-top: 2rem;
 }
 
-.form-card, .time-slots-card {
+.form-card, .time-slots-card, .summary-card {
   border: none;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 1.5rem;
+  background: white;
+  height: fit-content;
 }
 
 .form-card .card-body {
   padding: 2rem;
 }
 
-.time-slots-card .card-body {
+.time-slots-card .card-body, .summary-card .card-body {
   padding: 1.5rem;
 }
 
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
 .form-select-custom {
+  width: 100%;
   border: 2px solid #e5e7eb;
   border-radius: 8px;
   padding: 0.75rem;
-  transition: border-color 0.2s ease;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background-color: white;
 }
 
 .form-select-custom:focus {
+  outline: none;
   border-color: #3b82f6;
-  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .calendar-section {
@@ -49,11 +70,13 @@
 .calendar-section h5 {
   color: #374151;
   margin-bottom: 1rem;
+  font-weight: 600;
+  text-align: center;
 }
 
 .calendar {
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 1rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
@@ -66,6 +89,7 @@
   text-align: center;
   font-weight: 600;
   color: #6b7280;
+  font-size: 0.9rem;
 }
 
 .calendar-day-header {
@@ -84,26 +108,36 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
+  font-weight: 500;
+  border: 2px solid transparent;
+  min-height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .calendar-day:hover:not(.empty) {
-  background-color: #e5e7eb;
+  background-color: #f0f7ff;
+  border-color: #3b82f6;
 }
 
 .calendar-day.selected {
   background-color: #3b82f6;
   color: white;
+  border-color: #3b82f6;
 }
 
 .calendar-day.empty {
   background-color: transparent;
   cursor: default;
+  visibility: hidden;
 }
 
 .time-slots {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 0.75rem;
+  margin-top: 1rem;
 }
 
 .time-slot {
@@ -113,42 +147,133 @@
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s ease;
+  font-weight: 500;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 45px;
 }
 
 .time-slot:hover {
   border-color: #3b82f6;
   background-color: #f0f7ff;
+  transform: translateY(-1px);
 }
 
 .time-slot.selected {
   background-color: #3b82f6;
   color: white;
   border-color: #3b82f6;
+  transform: scale(1.02);
 }
 
 .confirm-btn {
-  background-color: #3b82f6;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   padding: 1rem 2rem;
   font-size: 1.1rem;
   font-weight: 600;
   width: 100%;
-  transition: background-color 0.2s ease;
+  transition: all 0.3s ease;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .confirm-btn:hover:not(:disabled) {
-  background-color: #2563eb;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .confirm-btn:disabled {
-  background-color: #9ca3af;
+  background: #9ca3af;
   cursor: not-allowed;
+  transform: none;
+}
+
+.summary-card {
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe) !important;
+  border-left: 4px solid #3b82f6 !important;
+}
+
+.summary-card h6 {
+  color: #3b82f6;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.summary-card p {
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+.summary-card strong {
+  color: #1e40af;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .time-slots {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 992px) {
+  .booking-form {
+    flex-direction: column;
+  }
+  
+  .time-slots {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
+  .services-page {
+    padding: 1rem;
+  }
+  
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .form-card .card-body {
+    padding: 1.5rem;
+  }
+  
+  .calendar {
+    padding: 1rem;
+  }
+  
+  .calendar-day {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    min-height: 40px;
+  }
+  
   .time-slots {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .time-slot {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    min-height: 40px;
+  }
+  
+  .confirm-btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .time-slots {
+    grid-template-columns: 1fr;
   }
   
   .calendar-header,
@@ -157,6 +282,13 @@
   }
   
   .calendar-day {
-    padding: 0.5rem;
+    padding: 0.4rem;
+    font-size: 0.8rem;
+    min-height: 35px;
+  }
+  
+  .calendar-day-header {
+    font-size: 0.8rem;
+    padding: 0.25rem;
   }
 }
