@@ -280,7 +280,252 @@
   .calendar-body {
     gap: 0.25rem;
   }
+  .services-page {
+  padding: 2rem 0;
+  min-height: 100vh;
+  background-color: #f8fafc;
+}
+
+.page-title {
+  color: #3b82f6;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+}
+
+.booking-form {
+  margin-top: 2rem;
+}
+
+.form-card, .time-slots-card, .summary-card {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  background: white;
+}
+
+.form-card .card-body {
+  padding: 2rem;
+}
+
+.time-slots-card .card-body, .summary-card .card-body {
+  padding: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.form-select-custom {
+  width: 100%;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+.form-select-custom:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Date Picker Styles */
+.date-picker {
+  cursor: pointer;
+}
+
+.react-datepicker-wrapper {
+  width: 100%;
+}
+
+.react-datepicker {
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.react-datepicker__header {
+  background-color: #f0f7ff;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.react-datepicker__current-month {
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+.react-datepicker__day--selected {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #f0f7ff;
+  color: #3b82f6;
+}
+
+.react-datepicker__day:hover {
+  background-color: #f0f7ff;
+}
+
+.selected-date-info {
+  background-color: #f0f9ff;
+  padding: 1rem;
+  border-radius: 8px;
+  border-left: 4px solid #3b82f6;
+}
+
+.selected-date-info h6 {
+  color: #3b82f6;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.selected-date-text {
+  color: #374151;
+  font-weight: 500;
+  margin: 0;
+}
+
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.time-slot {
+  padding: 0.75rem;
+  text-align: center;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+  background-color: white;
+  min-height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.time-slot:hover {
+  border-color: #3b82f6;
+  background-color: #f0f7ff;
+  transform: translateY(-1px);
+}
+
+.time-slot.selected {
+  background-color: #3b82f6;
+  color: white;
+  border-color: #3b82f6;
+  transform: scale(1.02);
+}
+
+.no-date-selected {
+  text-align: center;
+  padding: 2rem;
+  color: #6b7280;
+}
+
+.confirm-btn {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  border: none;
+  border-radius: 10px;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  width: 100%;
+  transition: all 0.3s ease;
+  color: white;
+}
+
+.confirm-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.confirm-btn:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.summary-card {
+  background: linear-gradient(135deg, #f0f9ff, #e0f2fe) !important;
+  border-left: 4px solid #3b82f6 !important;
+}
+
+.summary-card h6 {
+  color: #3b82f6;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.summary-card p {
+  margin-bottom: 0.5rem;
+  color: #374151;
+}
+
+.summary-card strong {
+  color: #1e40af;
+}
+
+/* Ensure both cards are same height */
+.h-100 {
+  height: 100% !important;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .time-slots {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .services-page {
+    padding: 1rem;
+  }
   
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .form-card .card-body {
+    padding: 1.5rem;
+  }
+  
+  .time-slots {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+  }
+  
+  .time-slot {
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    min-height: 45px;
+  }
+}
+
+@media (max-width: 576px) {
+  .time-slots {
+    grid-template-columns: 1fr;
+  }
+}
   .calendar-day {
     padding: 0.4rem;
     font-size: 0.8rem;

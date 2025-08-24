@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import './Services.css';
 
 const Services = () => {
   const [selectedService, setSelectedService] = useState('');
   const [selectedDoctor, setSelectedDoctor] = useState('');
-  const [selectedDate, setSelectedDate] = useState('2024-07-05');
+  const [selectedDate, setSelectedDate] = useState(null);
   const [selectedTime, setSelectedTime] = useState('');
 
   const services = [
@@ -32,31 +34,37 @@ const Services = () => {
   ];
 
   const handleBooking = () => {
-    if (!selectedService || !selectedDoctor || !selectedTime) {
-      alert('Please select service, doctor, and time');
+    if (!selectedService || !selectedDoctor || !selectedDate || !selectedTime) {
+      alert('Please select service, doctor, date, and time');
       return;
     }
+    
+    const formattedDate = selectedDate.toLocaleDateString('en-US', {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
     
     const bookingDetails = {
       service: selectedService,
       doctor: selectedDoctor,
-      date: 'July 5, 2024',
+      date: formattedDate,
       time: selectedTime
     };
     
     alert(`Appointment Booked Successfully!\n\nService: ${bookingDetails.service}\nDoctor: ${bookingDetails.doctor}\nDate: ${bookingDetails.date}\nTime: ${bookingDetails.time}`);
   };
 
-  // Fixed calendar data for July 2024 (starts on Monday)
-  const calendarWeeks = [
-    [null, 1, 2, 3, 4, 5, 6],
-    [7, 8, 9, 10, 11, 12, 13],
-    [14, 15, 16, 17, 18, 19, 20],
-    [21, 22, 23, 24, 25, 26, 27],
-    [28, 29, 30, 31, null, null, null]
-  ];
+  // Filter out weekends and past dates
+  const isWeekday = (date) => {
+    const day = date.getDay();
+    return day !== 0 && day !== 6; // Sunday = 0, Saturday = 6
+  };
 
-  const weekDays = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+  const isPastDate = (date) => {
+    return date < new Date().setHours(0, 0, 0, 0);
+  };
 
   return (
     <Container className="services-page">
@@ -70,7 +78,7 @@ const Services = () => {
         <Col xl={10}>
           <Row>
             <Col lg={6}>
-              <Card className="form-card">
+              <Card className="form-card h-100">
                 <Card.Body>
                   <div className="form-group">
                     <label className="form-label">Service</label>
@@ -100,70 +108,84 @@ const Services = () => {
                     </select>
                   </div>
 
-                  <div className="calendar-section">
-                    <h5 className="text-center">July 2024</h5>
-                    <div className="calendar">
-                      <div className="calendar-header">
-                        {weekDays.map(day => (
-                          <div key={day} className="calendar-day-header">{day}</div>
-                        ))}
-                      </div>
-                      
-                      <div className="calendar-body">
-                        {calendarWeeks.map((week, weekIndex) => (
-                          <React.Fragment key={weekIndex}>
-                            {week.map((day, dayIndex) => (
-                              <div 
-                                key={`${weekIndex}-${dayIndex}`}
-                                className={`calendar-day ${day === 5 ? 'selected' : ''} ${day ? '' : 'empty'}`}
-                                onClick={() => day && setSelectedDate(`2024-07-${day.toString().padStart(2, '0')}`)}
-                              >
-                                {day || ''}
-                              </div>
-                            ))}
-                          </React.Fragment>
-                        ))}
-                      </div>
-                    </div>
+                  <div className="form-group">
+                    <label className="form-label">Select Date</label>
+                    <DatePicker
+                      selected={selectedDate}
+                      onChange={(date) => setSelectedDate(date)}
+                      minDate={new Date()}
+                      filterDate={(date) => isWeekday(date) && !isPastDate(date)}
+                      placeholderText="Choose a date"
+                      className="form-select-custom date-picker"
+                      dateFormat="MMMM d, yyyy"
+                    />
                   </div>
+
+                  {selectedDate && (
+                    <div className="selected-date-info">
+                      <h6>Selected Date:</h6>
+                      <p className="selected-date-text">
+                        {selectedDate.toLocaleDateString('en-US', {
+                          weekday: 'long',
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric'
+                        })}
+                      </p>
+                    </div>
+                  )}
                 </Card.Body>
               </Card>
             </Col>
 
             <Col lg={6}>
-              <Card className="time-slots-card">
+              <Card className="time-slots-card h-100">
                 <Card.Body>
-                  <h5 className="text-center">Available Times on July 5, 2024</h5>
-                  <div className="time-slots">
-                    {timeSlots.map(time => (
-                      <div
-                        key={time}
-                        className={`time-slot ${selectedTime === time ? 'selected' : ''}`}
-                        onClick={() => setSelectedTime(time)}
-                      >
-                        {time}
-                      </div>
-                    ))}
-                  </div>
+                  <h5 className="text-center">
+                    {selectedDate ? `Available Times on ${selectedDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })}` : 'Select a date to see available times'}
+                  </h5>
+                  
+                  {selectedDate ? (
+                    <div className="time-slots">
+                      {timeSlots.map(time => (
+                        <div
+                          key={time}
+                          className={`time-slot ${selectedTime === time ? 'selected' : ''}`}
+                          onClick={() => setSelectedTime(time)}
+                        >
+                          {time}
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="no-date-selected">
+                      <p>Please select a date to view available time slots</p>
+                    </div>
+                  )}
                 </Card.Body>
               </Card>
 
               <Button 
-                className="confirm-btn" 
+                className="confirm-btn mt-3" 
                 onClick={handleBooking}
-                disabled={!selectedService || !selectedDoctor || !selectedTime}
+                disabled={!selectedService || !selectedDoctor || !selectedDate || !selectedTime}
               >
                 Confirm Booking
               </Button>
 
               {/* Booking Summary */}
-              {selectedService && selectedDoctor && selectedTime && (
+              {selectedService && selectedDoctor && selectedDate && selectedTime && (
                 <Card className="summary-card mt-3">
                   <Card.Body>
                     <h6>Booking Summary</h6>
                     <p><strong>Service:</strong> {selectedService}</p>
                     <p><strong>Doctor:</strong> {selectedDoctor}</p>
-                    <p><strong>Date:</strong> July 5, 2024</p>
+                    <p><strong>Date:</strong> {selectedDate.toLocaleDateString('en-US', {
+                      weekday: 'long',
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
+                    })}</p>
                     <p><strong>Time:</strong> {selectedTime}</p>
                   </Card.Body>
                 </Card>
