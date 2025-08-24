@@ -3,13 +3,24 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from './components/Sidebar/Sidebar';
 import Home from './Pages/Home/Home';
 import Services from './Pages/Services/Services';
+import Doctors from './Pages/Doctors/Doctors';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/globals.css';
 
-// Placeholder components for other pages
-const Doctors = () => <div style={{ padding: '20px' }}><h2>Doctors Page</h2></div>;
-const Reviews = () => <div style={{ padding: '20px' }}><h2>Reviews Page</h2></div>;
-const Contact = () => <div style={{ padding: '20px' }}><h2>Contact Page</h2></div>;
+// Simple placeholder components
+const Reviews = () => (
+  <div style={{ padding: '40px', textAlign: 'center' }}>
+    <h2 style={{ color: '#3b82f6' }}>Reviews Page</h2>
+    <p style={{ color: '#6b7280' }}>Patient reviews will be displayed here</p>
+  </div>
+);
+
+const Contact = () => (
+  <div style={{ padding: '40px', textAlign: 'center' }}>
+    <h2 style={{ color: '#3b82f6' }}>Contact Page</h2>
+    <p style={{ color: '#6b7280' }}>Contact form will be displayed here</p>
+  </div>
+);
 
 function App() {
   const [sidebarExpanded, setSidebarExpanded] = useState(true);
